@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wibi Dwi Andriyanto | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card-glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        .skill-pill {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+        
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Background Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full py-4 px-6 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">W</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button class="md:hidden text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">Wibi Dwi Andriyanto</span></h1>
+                <h2 class="text-2xl md:text-3xl text-gray-400 mb-6">Software & Web Developer</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Passionate about building innovative solutions with clean, efficient code. 
+                    Currently studying Information Systems at Universitas Darma Persada.
+                </p>
+                <div class="flex space-x-4 justify-center md:justify-start">
+                    <a href="#contact" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:opacity-90 transition">Contact Me</a>
+                    <a href="#projects" class="px-6 py-3 border border-blue-500 rounded-full font-semibold hover:bg-blue-900/30 transition">View Projects</a>
+                </div>
+            </div>
+            <div class="relative hidden md:block">
+                <div class="w-80 h-80 mx-auto rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 floating"></div>
+                <img src="https://i.pinimg.com/736x/3e/13/0a/3e130acfeda3dfeafe5542def0afcc9d.jpg" alt="Wibi Dwi Andriyanto" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full object-cover border-4 border-blue-500/20 floating" style="animation-delay: 0.5s;">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">About Me</span></h2>
+            <div class="card-glass rounded-2xl p-8 shadow-xl">
+                <p class="text-lg mb-6">
+                    I'm an Information Systems student with a strong interest in software and web development. 
+                    Experienced in working with various programming languages including Python, CSS, JavaScript, and C++.
+                </p>
+                <p class="text-lg mb-6">
+                    With high enthusiasm for learning, accustomed to problem solving, and currently actively building 
+                    personal projects as a portfolio to enhance my skills and knowledge.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold gradient-text">2+</div>
+                        <div class="text-gray-400">Years Experience</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold gradient-text">5+</div>
+                        <div class="text-gray-400">Completed Projects</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold gradient-text">1</div>
+                        <div class="text-gray-400">Organization</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold gradient-text">3</div>
+                        <div class="text-gray-400">Certifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">Technical Skills</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Programming Languages</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-blue-900/50 rounded-full">Python</span>
+                        <span class="skill-pill px-4 py-2 bg-blue-900/50 rounded-full">JavaScript</span>
+                        <span class="skill-pill px-4 py-2 bg-blue-900/50 rounded-full">C++</span>
+                        <span class="skill-pill px-4 py-2 bg-blue-900/50 rounded-full">PHP</span>
+                    </div>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Front-End</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-purple-900/50 rounded-full">HTML5</span>
+                        <span class="skill-pill px-4 py-2 bg-purple-900/50 rounded-full">CSS3</span>
+                        <span class="skill-pill px-4 py-2 bg-purple-900/50 rounded-full">Tailwind</span>
+                        <span class="skill-pill px-4 py-2 bg-purple-900/50 rounded-full">React</span>
+                    </div>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Back-End</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-indigo-900/50 rounded-full">Node.js</span>
+                        <span class="skill-pill px-4 py-2 bg-indigo-900/50 rounded-full">Laravel</span>
+                        <span class="skill-pill px-4 py-2 bg-indigo-900/50 rounded-full">REST API</span>
+                    </div>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Database</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-teal-900/50 rounded-full">MySQL</span>
+                        <span class="skill-pill px-4 py-2 bg-teal-900/50 rounded-full">PostgreSQL</span>
+                        <span class="skill-pill px-4 py-2 bg-teal-900/50 rounded-full">SQLite</span>
+                    </div>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Tools</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-pink-900/50 rounded-full">Git</span>
+                        <span class="skill-pill px-4 py-2 bg-pink-900/50 rounded-full">GitHub</span>
+                        <span class="skill-pill px-4 py-2 bg-pink-900/50 rounded-full">VS Code</span>
+                        <span class="skill-pill px-4 py-2 bg-pink-900/50 rounded-full">Figma</span>
+                        <span class="skill-pill px-4 py-2 bg-pink-900/50 rounded-full">Postman</span>
+                    </div>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-center gradient-text">Language</h3>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="skill-pill px-4 py-2 bg-amber-900/50 rounded-full">English (Intermediate)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-12 text-center">
+      <span class="gradient-text">Featured Projects</span>
+    </h2>
+
+    <div class="space-y-8">
+      <!-- Praktikum 1 -->
+      <div class="card-glass rounded-2xl overflow-hidden">
+        <div class="grid md:grid-cols-2">
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2">Praktikum 1</h3>
+            <p class="text-gray-300 mb-4">Create a simple website.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-blue-900/50 rounded-full text-sm">HTML</span>
+              <span class="px-3 py-1 bg-blue-900/50 rounded-full text-sm">CSS</span>
+            </div>
+            <a href="/websederhana/index.html">
+              View on GitHub <i class="fas fa-external-link-alt ml-2"></i>
+            </a>
+          </div>
+          <div class="relative hidden md:block">
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Portfolio Project" class="absolute h-full w-full object-cover" style="filter: brightness(0.7);">
+          </div>
+        </div>
+      </div>
+
+      <!-- Praktikum 2 -->
+      <div class="card-glass rounded-2xl overflow-hidden">
+        <div class="grid md:grid-cols-2">
+          <div class="p-6 order-2 md:order-1">
+            <h3 class="text-2xl font-bold mb-2">Praktikum 2</h3>
+            <p class="text-gray-300 mb-4">Create a Cafe Website.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-blue-900/50 rounded-full text-sm">HTML</span>
+              <span class="px-3 py-1 bg-blue-900/50 rounded-full text-sm">CSS</span>
+            </div>
+            <a href="/Cafee/index.html">
+              View on GitHub <i class="fas fa-external-link-alt ml-2"></i>
+            </a>
+          </div>
+          <div class="relative hidden md:block order-1 md:order-2">
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Task App Project" class="absolute h-full w-full object-cover" style="filter: brightness(0.7);">
+          </div>
+        </div>
+      </div>
+
+      <!-- Praktikum 3 (Fixed) -->
+      <div class="card-glass rounded-2xl overflow-hidden">
+        <div class="grid md:grid-cols-2">
+          <div class="p-6 order-2 md:order-1">
+            <h3 class="text-2xl font-bold mb-2">Praktikum 3</h3>
+            <p class="text-gray-300 mb-4">MY SQL.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-blue-900/50 rounded-full text-sm">HTML</span>
+            </div>
+            <a href="/mysql/index.html">
+              View on GitHub <i class="fas fa-external-link-alt ml-2"></i>
+            </a>
+          </div>
+          <div class="relative hidden md:block order-1 md:order-2">
+            <img src="https://i.pinimg.com/736x/cc/3a/66/cc3a662919b723e5915ac5c3a6c286c6.jpg" alt="Cafe Project" class="absolute h-full w-full object-cover" style="filter: brightness(0.7);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">Education & Experience</span></h2>
+            <div class="space-y-8">
+                <div class="card-glass p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-2">Universitas Darma Persada</h3>
+                    <p class="text-gray-400 mb-2">Bachelor of Information Systems • 2024 – Present</p>
+                    <p class="text-gray-300">Current GPA: 3.5/4.0</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold mb-6 mt-12"><span class="gradient-text">Certifications</span></h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="card-glass p-6 rounded-xl">
+                    <h4 class="text-lg font-semibold mb-2">Belajar Dasar Pemrograman Web</h4>
+                    <p class="text-gray-400 text-sm">Dicoding</p>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h4 class="text-lg font-semibold mb-2">Python for Everybody</h4>
+                    <p class="text-gray-400 text-sm">Coursera</p>
+                </div>
+                <div class="card-glass p-6 rounded-xl">
+                    <h4 class="text-lg font-semibold mb-2">C++ Programming</h4>
+                    <p class="text-gray-400 text-sm">SoloLearn</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold mb-6 mt-12"><span class="gradient-text">Organization</span></h3>
+            <div class="card-glass p-8 rounded-2xl">
+                <h3 class="text-xl font-bold mb-2">IT Division Member - BEM Faculty</h3>
+                <p class="text-gray-300">
+                    Assisted with the development of internal information systems and documentation of activities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">Get In Touch</span></h2>
+            <div class="card-glass p-8 rounded-2xl">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-blue-500 text-xl w-8"></i>
+                                <span>wibidwiandriyanto.12@gmail.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-blue-500 text-xl w-8"></i>
+                                <span>085692527303</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-linkedin text-blue-500 text-xl w-8"></i>
+                                <a href="https://linkedin.com/in/Wibidwi" target="_blank" class="hover:text-blue-300">linkedin.com/in/Wibidwi</a>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-github text-blue-500 text-xl w-8"></i>
+                                <a href="https://github.com/Wibi-11" target="_blank" class="hover:text-blue-300">github.com/Wibi-11</a>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-globe text-blue-500 text-xl w-8"></i>
+                                <a href="https://Wibi0009" target="_blank" class="hover:text-blue-300">Wibi0009</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block mb-1">Your Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-1">Your Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-1">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:opacity-90 transition">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto text-center">
+            <p>© 2023 Wibi Dwi Andriyanto. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 3D Background Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvasContainer = document.getElementById('canvas-container');
+            
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            canvasContainer.appendChild(renderer.domElement);
+            
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            const colorArray = new Float32Array(particleCount * 3);
+            
+            for(let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+                colorArray[i] = Math.random();
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.03,
+                transparent: true,
+                opacity: 0.8,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Camera position
+            camera.position.z = 3;
+            
+            // Mouse movement effect
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0002;
+                particlesMesh.rotation.y += 0.0002;
+                
+                // Particle movement based on mouse position
+                const positions = particlesGeometry.attributes.position.array;
+                for(let i = 0; i < particleCount; i++) {
+                    const i3 = i * 3;
+                    
+                    // Add subtle movement
+                    positions[i3 + 0] += Math.sin(Date.now() * 0.0005 + i) * 0.0005;
+                    positions[i3 + 1] += Math.cos(Date.now() * 0.0005 + i) * 0.0005;
+                    
+                    // Add interaction with mouse
+                    if(mouseX !== 0 || mouseY !== 0) {
+                        const dx = mouseX * 5 - positions[i3 + 0];
+                        const dy = mouseY * 5 - positions[i3 + 1];
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if(distance < 3) {
+                            positions[i3 + 0] -= dx * 0.005;
+                            positions[i3 + 1] -= dy * 0.005;
+                        }
+                    }
+                }
+                particlesGeometry.attributes.position.needsUpdate = true;
+                
+                renderer.render(scene, camera);
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            animate();
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
